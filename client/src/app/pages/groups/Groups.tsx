@@ -48,6 +48,39 @@ const Groups: React.FC = () => {
     return (
         <>
             <h2>Groups</h2>
+            {
+                // Create a button for adding a new group to the list
+                <button
+                    onClick={() => {
+                        const groups = data.groups;
+                        const newGroup: IGroupDto = {
+                            id: groups.length + 1,
+                            name: `Group ${groups.length + 1}`,
+                            isActive: true,
+                            createdDate: new Date(),
+                            updatedDate: new Date()
+                        };
+                        groups.push(newGroup);
+                        setData({ groups: groups, isFetching: false });
+                    }}
+                >
+                    Add new group
+                </button>
+            }
+            {
+                // Create a button for removing the last group from the list
+                // Disable the button if there are no groups in the list
+                <button
+                    disabled={data.groups.length === 0}
+                    onClick={() => {
+                        const groups = data.groups;
+                        groups.pop();
+                        setData({ groups: groups, isFetching: false });
+                    }}
+                >
+                    Remove last group
+                </button>
+            }
             <DetailsList
                 items={data.groups.map((group) => {
                     return {
